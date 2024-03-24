@@ -49,7 +49,7 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
           const Spacer(),
           Container(
-            height: height * 0.37,
+            height: height * 0.32,
             width: width * 1,
             decoration: const BoxDecoration(
                 color: secondarybgColor,
@@ -92,51 +92,61 @@ class _ResultScreenState extends State<ResultScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
-                  (widget.label!.toLowerCase() != 'no pili detected' ||
-                          widget.confidence != 0.0)
-                      ? AppButton(
-                          title: "Description",
-                          onPress: () => Navigator.pushNamed(
-                            context,
-                            ResultDescriptionScreen.id,
-                            arguments: {
-                              'filePath': widget.filePath,
-                              'label': widget.label,
-                              'confidence': widget.confidence,
-                              'input': widget.input,
-                            },
-                          ),
-                          fontSize: 16,
-                          horizontalPadding: 110,
-                          verticalPadding: 15,
-                          bgColor: primaryColor,
-                        )
-                      : Container(),
-                  const SizedBox(height: 5),
-                  (widget.label!.toLowerCase() != 'no pili detected' ||
-                          widget.confidence != 0.0)
-                      ? CancelButton(
-                          title: "Cancel",
-                          onPress: (widget.input == 'MPF')
-                              ? () => Navigator.pushNamed(context, MPFScreen.id)
-                              : () =>
-                                  Navigator.pushNamed(context, RPSScreen.id),
-                          fontSize: 16,
-                          horizontalPadding: 126,
-                          verticalPadding: 15,
-                          bgColor: primarybgColor,
-                        )
-                      : AppButton(
-                          title: "Retry",
-                          onPress: (widget.input == 'MPF')
-                              ? () => Navigator.pushNamed(context, MPFScreen.id)
-                              : () =>
-                                  Navigator.pushNamed(context, RPSScreen.id),
-                          fontSize: 16,
-                          horizontalPadding: 128,
-                          verticalPadding: 15,
-                          bgColor: primaryColor,
-                        )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (widget.label!.toLowerCase() != 'no pili detected' ||
+                              widget.confidence != 0.0)
+                          ? CancelButton(
+                              title: "Cancel",
+                              onPress: (widget.input == 'MPF')
+                                  ? () =>
+                                      Navigator.pushNamed(context, MPFScreen.id)
+                                  : () => Navigator.pushNamed(
+                                      context, RPSScreen.id),
+                              fontSize: 16,
+                              horizontalPadding: 35,
+                              verticalPadding: 15,
+                              bgColor: primarybgColor,
+                            )
+                          : AppButton(
+                              title: "Retry",
+                              onPress: (widget.input == 'MPF')
+                                  ? () =>
+                                      Navigator.pushNamed(context, MPFScreen.id)
+                                  : () => Navigator.pushNamed(
+                                      context, RPSScreen.id),
+                              fontSize: 16,
+                              horizontalPadding: 128,
+                              verticalPadding: 15,
+                              bgColor: primaryColor,
+                            ),
+                      (widget.label!.toLowerCase() != 'no pili detected' ||
+                              widget.confidence != 0.0)
+                          ? const SizedBox(width: 10)
+                          : Container(),
+                      (widget.label!.toLowerCase() != 'no pili detected' ||
+                              widget.confidence != 0.0)
+                          ? AppButton(
+                              title: "Description",
+                              onPress: () => Navigator.pushNamed(
+                                context,
+                                ResultDescriptionScreen.id,
+                                arguments: {
+                                  'filePath': widget.filePath,
+                                  'label': widget.label,
+                                  'confidence': widget.confidence,
+                                  'input': widget.input,
+                                },
+                              ),
+                              fontSize: 16,
+                              horizontalPadding: 50,
+                              verticalPadding: 15,
+                              bgColor: primaryColor,
+                            )
+                          : Container(),
+                    ],
+                  )
                 ],
               ),
             ),

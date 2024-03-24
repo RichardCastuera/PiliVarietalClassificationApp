@@ -17,7 +17,12 @@ class HomeScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-      appBar: appBar(label: "", bgColor: primaryColor, fontColor: primaryColor),
+      appBar: appBar(
+          label: "",
+          bgColor: primaryColor,
+          fontColor: primaryColor,
+          context: context,
+          origPressFunction: true),
       backgroundColor: primarybgColor,
       body: Stack(
         children: [

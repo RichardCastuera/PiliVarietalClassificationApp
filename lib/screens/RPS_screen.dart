@@ -188,6 +188,8 @@ class _RPSScreenState extends State<RPSScreen> {
         label: 'Raw Pili in the Shell',
         bgColor: primaryColor,
         fontColor: white,
+        context: context,
+        origPressFunction: true,
       ),
       backgroundColor: primarybgColor,
       body: Stack(

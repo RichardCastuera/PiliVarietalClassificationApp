@@ -60,32 +60,32 @@ class _ResultScreenState extends State<ResultDescriptionScreen> {
                                     input: widget.input!)
                                 : Container(),
             Container(
-              height: height * 0.2,
+              height: height * 0.12,
               width: width,
               decoration: const BoxDecoration(
                 color: primarybgColor,
               ),
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  AppButton(
+                    title: "Home",
+                    onPress: () => Navigator.pushNamed(context, HomeScreen.id),
+                    fontSize: 16,
+                    horizontalPadding: 40,
+                    verticalPadding: 15,
+                    bgColor: secondarybgColor,
+                  ),
+                  const SizedBox(width: 10),
                   AppButton(
                     title: "Retry",
                     onPress: (widget.input == 'MPF')
                         ? () => Navigator.pushNamed(context, MPFScreen.id)
                         : () => Navigator.pushNamed(context, RPSScreen.id),
                     fontSize: 16,
-                    horizontalPadding: 128,
+                    horizontalPadding: 75,
                     verticalPadding: 15,
                     bgColor: primaryColor,
-                  ),
-                  const SizedBox(height: 15),
-                  AppButton(
-                    title: "Home",
-                    onPress: () => Navigator.pushNamed(context, HomeScreen.id),
-                    fontSize: 16,
-                    horizontalPadding: 124,
-                    verticalPadding: 15,
-                    bgColor: primarybgColor,
                   ),
                 ],
               ),

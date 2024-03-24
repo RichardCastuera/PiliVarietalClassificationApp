@@ -188,6 +188,8 @@ class _MPFScreenState extends State<MPFScreen> {
         label: 'Mature Pili Fruit',
         bgColor: primaryColor,
         fontColor: white,
+        context: context,
+        origPressFunction: true,
       ),
       backgroundColor: primarybgColor,
       body: Stack(

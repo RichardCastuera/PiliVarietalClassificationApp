@@ -39,6 +39,8 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
         label: 'Preview',
         bgColor: secondarybgColor,
         fontColor: white,
+        context: context,
+        origPressFunction: false,
       ),
       body: Column(
         children: [
