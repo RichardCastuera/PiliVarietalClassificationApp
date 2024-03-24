@@ -17,7 +17,7 @@ AppBar appBar({
     ),
     backgroundColor: bgColor,
     foregroundColor: fontColor,
-    leading: origPressFunction
+    leading: !origPressFunction
         ? IconButton(
             onPressed: () {
               // Navigate to HomeScreen when IconButton is pressed
