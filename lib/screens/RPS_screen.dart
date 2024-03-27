@@ -197,7 +197,10 @@ class _RPSScreenState extends State<RPSScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppBanner(height: height),
+              AppBanner(
+                height: height,
+                isHomeScreen: false,
+              ),
               Padding(
                 padding: EdgeInsets.only(bottom: height * 0.20),
                 child: Column(
@@ -212,7 +215,7 @@ class _RPSScreenState extends State<RPSScreen> {
                               onPress: () => pickImageCamera(),
                               horizontalPadding: 15,
                               verticalPadding: 15,
-                              iconData: Icons.camera_outlined,
+                              iconData: Icons.camera_rounded,
                               title: "Capture",
                               bgColor: primaryColor,
                               textColor: white,
@@ -222,7 +225,7 @@ class _RPSScreenState extends State<RPSScreen> {
                               onPress: () => pickImageGallery(),
                               horizontalPadding: 19,
                               verticalPadding: 15,
-                              iconData: Icons.upload_outlined,
+                              iconData: Icons.upload_rounded,
                               title: "Upload",
                               bgColor: primaryColor,
                               textColor: white,
@@ -242,6 +245,7 @@ class _RPSScreenState extends State<RPSScreen> {
             assetImage: 'assets/imgs/shell.png',
             title: 'Raw Pili in the Shell',
             leftPositionMultiplier: 0.25,
+            isHomeScreen: false,
           )
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pili_variety_classification/screens/home_screen.dart';
+import 'package:pili_variety_classification/utils/app_colors.dart';
 
 AppBar appBar({
   required BuildContext context,
@@ -14,6 +15,20 @@ AppBar appBar({
       color: fontColor,
       fontFamily: 'ProximaNova',
       fontSize: 20,
+    ),
+    flexibleSpace: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            primaryColor.withOpacity(0.8),
+            primaryColor.withOpacity(0.5),
+            primaryColor.withOpacity(0.2),
+            primaryColor.withOpacity(0.1),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
     ),
     backgroundColor: bgColor,
     foregroundColor: fontColor,

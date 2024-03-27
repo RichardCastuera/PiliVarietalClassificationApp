@@ -9,6 +9,7 @@ class AppCircleAvatar extends StatelessWidget {
     required this.assetImage,
     required this.title,
     required this.leftPositionMultiplier,
+    required this.isHomeScreen,
   });
 
   final double height;
@@ -16,11 +17,12 @@ class AppCircleAvatar extends StatelessWidget {
   final double leftPositionMultiplier;
   final String assetImage;
   final String title;
+  final bool isHomeScreen;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: height * 0.13,
+      top: isHomeScreen ? height * 0.23 : height * 0.17,
       left: width * leftPositionMultiplier,
       child: Column(
         children: [

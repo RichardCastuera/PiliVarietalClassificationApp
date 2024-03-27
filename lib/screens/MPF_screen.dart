@@ -27,7 +27,7 @@ class _MPFScreenState extends State<MPFScreen> {
 
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/MPF-EfficientNetB0.tflite",
+        model: "assets/models/EfficientNetB0-OOD-ADD.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -89,6 +89,15 @@ class _MPFScreenState extends State<MPFScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
+    } else if (recognitions != null &&
+        recognitions.length >= 6 &&
+        recognitions[5]['label'] != null &&
+        recognitions.isEmpty &&
+        recognitions[5]['label'] == 'ood') {
+      setState(() {
+        label = "No Pili Detected";
+        confidence = recognitions[0]['confidence'] = 0.0;
+      });
     } else {
       setState(() {
         label = "No Pili Detected";
@@ -143,13 +152,20 @@ class _MPFScreenState extends State<MPFScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
+    } else if (recognitions != null &&
+        recognitions.length >= 6 &&
+        recognitions[5]['label'] != null &&
+        recognitions[5]['label'] == 'ood') {
+      setState(() {
+        label = "No Pili Detected";
+        confidence = 0;
+      });
     } else {
       setState(() {
         label = "No Pili Detected";
         confidence = 0;
       });
     }
-
     setState(() {
       Navigator.pushNamed(
         context,
@@ -197,7 +213,10 @@ class _MPFScreenState extends State<MPFScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppBanner(height: height),
+              AppBanner(
+                height: height,
+                isHomeScreen: false,
+              ),
               Padding(
                 padding: EdgeInsets.only(bottom: height * 0.20),
                 child: Column(
@@ -212,7 +231,7 @@ class _MPFScreenState extends State<MPFScreen> {
                               onPress: () => pickImageCamera(),
                               horizontalPadding: 15,
                               verticalPadding: 15,
-                              iconData: Icons.camera_outlined,
+                              iconData: Icons.camera_rounded,
                               title: "Capture",
                               bgColor: primaryColor,
                               textColor: white,
@@ -222,7 +241,7 @@ class _MPFScreenState extends State<MPFScreen> {
                               onPress: () => pickImageGallery(),
                               horizontalPadding: 19,
                               verticalPadding: 15,
-                              iconData: Icons.upload_outlined,
+                              iconData: Icons.upload_rounded,
                               title: "Upload",
                               bgColor: primaryColor,
                               textColor: white,
@@ -242,6 +261,7 @@ class _MPFScreenState extends State<MPFScreen> {
             assetImage: 'assets/imgs/mature.png',
             title: 'Mature Pili Fruit',
             leftPositionMultiplier: 0.29,
+            isHomeScreen: false,
           )
         ],
       ),

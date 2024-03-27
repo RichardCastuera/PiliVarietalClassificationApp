@@ -100,8 +100,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        (widget.label!.toLowerCase() != 'no pili detected' ||
-                                widget.confidence != 0.0)
+                        (widget.label!.toLowerCase() != 'no pili detected' &&
+                                widget.confidence != 0.0 &&
+                                widget.label!.toLowerCase() != 'ood')
                             ? CancelButton(
                                 title: "Cancel",
                                 onPress: (widget.input == 'MPF')
@@ -126,12 +127,14 @@ class _ResultScreenState extends State<ResultScreen> {
                                 verticalPadding: 15,
                                 bgColor: primaryColor,
                               ),
-                        (widget.label!.toLowerCase() != 'no pili detected' ||
-                                widget.confidence != 0.0)
+                        (widget.label!.toLowerCase() != 'no pili detected' &&
+                                widget.confidence != 0.0 &&
+                                widget.label!.toLowerCase() != 'ood')
                             ? const SizedBox(width: 10)
                             : Container(),
-                        (widget.label!.toLowerCase() != 'no pili detected' ||
-                                widget.confidence != 0.0)
+                        (widget.label!.toLowerCase() != 'no pili detected' &&
+                                widget.confidence != 0.0 &&
+                                widget.label!.toLowerCase() != 'ood')
                             ? AppButton(
                                 title: "Description",
                                 onPress: () => Navigator.pushNamed(

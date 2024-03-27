@@ -17,19 +17,16 @@ class HomeScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-      appBar: appBar(
-          label: "",
-          bgColor: primaryColor,
-          fontColor: primaryColor,
-          context: context,
-          origPressFunction: true),
       backgroundColor: primarybgColor,
       body: Stack(
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppBanner(height: height),
+              AppBanner(
+                height: height,
+                isHomeScreen: true,
+              ),
               Padding(
                 padding: EdgeInsets.only(bottom: height * 0.15),
                 child: Column(
@@ -82,6 +79,7 @@ class HomeScreen extends StatelessWidget {
             assetImage: 'assets/imgs/logo.png',
             title: 'Pili Variety Classification',
             leftPositionMultiplier: 0.18,
+            isHomeScreen: true,
           )
         ],
       ),
