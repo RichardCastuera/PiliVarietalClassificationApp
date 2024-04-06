@@ -27,7 +27,7 @@ class _MPFScreenState extends State<MPFScreen> {
 
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/EfficientNetB0-OOD-ADD.tflite",
+        model: "assets/models/EfficientNetB0.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -51,8 +51,7 @@ class _MPFScreenState extends State<MPFScreen> {
         img.copyResize(image!, width: targetWidth, height: targetHeight);
 
     // Save the resized image to a new file
-    File resizedFile = File(imageFile.path.replaceAll(
-        '.jpg', '_resized.jpg')); // Change the file extension as needed
+    File resizedFile = File(imageFile.path.replaceAll('.jpg', '_resized.jpg'));
     await resizedFile.writeAsBytes(img.encodeJpg(resizedImage));
 
     return resizedFile;
@@ -79,7 +78,7 @@ class _MPFScreenState extends State<MPFScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.8,
+      threshold: 0.5,
       asynch: true,
     );
 
@@ -142,7 +141,7 @@ class _MPFScreenState extends State<MPFScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.8,
+      threshold: 0.5,
       asynch: true,
     );
 
@@ -166,6 +165,7 @@ class _MPFScreenState extends State<MPFScreen> {
         confidence = 0;
       });
     }
+
     setState(() {
       Navigator.pushNamed(
         context,

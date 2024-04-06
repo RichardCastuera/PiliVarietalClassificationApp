@@ -27,7 +27,7 @@ class _RPSScreenState extends State<RPSScreen> {
 
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/RPS-EfficientNetB1.tflite",
+        model: "assets/models/EfficientNetB1.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -51,8 +51,7 @@ class _RPSScreenState extends State<RPSScreen> {
         img.copyResize(image!, width: targetWidth, height: targetHeight);
 
     // Save the resized image to a new file
-    File resizedFile = File(imageFile.path.replaceAll(
-        '.jpg', '_resized.jpg')); // Change the file extension as needed
+    File resizedFile = File(imageFile.path.replaceAll('.jpg', '_resized.jpg'));
     await resizedFile.writeAsBytes(img.encodeJpg(resizedImage));
 
     return resizedFile;
@@ -79,7 +78,7 @@ class _RPSScreenState extends State<RPSScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.8,
+      threshold: 0.5,
       asynch: true,
     );
 
@@ -89,6 +88,14 @@ class _RPSScreenState extends State<RPSScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
+    } else if (recognitions != null &&
+        recognitions.length >= 6 &&
+        recognitions[5]['label'] != null &&
+        recognitions[5]['label'] == 'ood') {
+      setState(() {
+        label = "No Pili Detected";
+        confidence = 0;
+      });
     } else {
       setState(() {
         label = "No Pili Detected";
@@ -133,7 +140,7 @@ class _RPSScreenState extends State<RPSScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.8,
+      threshold: 0.5,
       asynch: true,
     );
 
@@ -143,6 +150,14 @@ class _RPSScreenState extends State<RPSScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
+    } else if (recognitions != null &&
+        recognitions.length >= 6 &&
+        recognitions[5]['label'] != null &&
+        recognitions[5]['label'] == 'ood') {
+      setState(() {
+        label = "No Pili Detected";
+        confidence = 0;
+      });
     } else {
       setState(() {
         label = "No Pili Detected";

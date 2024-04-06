@@ -36,7 +36,7 @@ class _ScanningImageScreenState extends State<ScanningImageScreen> {
   }
 
   void _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 3));
     Navigator.of(context).pushNamed(
       ResultScreen.id,
       arguments: {
