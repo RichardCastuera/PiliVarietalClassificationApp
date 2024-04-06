@@ -25,6 +25,7 @@ class _MPFScreenState extends State<MPFScreen> {
   double confidence = 0.0;
   String input = 'MPF';
 
+  // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
         model: "assets/models/EfficientNetB0.tflite",

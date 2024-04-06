@@ -25,6 +25,7 @@ class _RPSScreenState extends State<RPSScreen> {
   double confidence = 0.0;
   String input = 'RPS';
 
+  // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
         model: "assets/models/EfficientNetB1.tflite",
