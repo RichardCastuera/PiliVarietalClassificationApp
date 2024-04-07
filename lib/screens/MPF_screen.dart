@@ -39,24 +39,24 @@ class _MPFScreenState extends State<MPFScreen> {
   }
 
   // Function to resize the image to 224x224 pixels
-  Future<File> resizeImage(
-      File imageFile, int targetWidth, int targetHeight) async {
-    // Read the image as bytes
-    List<int> imageBytes = await imageFile.readAsBytes();
+  // Future<File> resizeImage(
+  //     File imageFile, int targetWidth, int targetHeight) async {
+  //   // Read the image as bytes
+  //   List<int> imageBytes = await imageFile.readAsBytes();
 
-    // Decode the image
-    img.Image? image = img.decodeImage(imageBytes);
+  //   // Decode the image
+  //   img.Image? image = img.decodeImage(imageBytes);
 
-    // Resize the image
-    img.Image resizedImage =
-        img.copyResize(image!, width: targetWidth, height: targetHeight);
+  //   // Resize the image
+  //   img.Image resizedImage =
+  //       img.copyResize(image!, width: targetWidth, height: targetHeight);
 
-    // Save the resized image to a new file
-    File resizedFile = File(imageFile.path.replaceAll('.jpg', '_resized.jpg'));
-    await resizedFile.writeAsBytes(img.encodeJpg(resizedImage));
+  //   // Save the resized image to a new file
+  //   File resizedFile = File(imageFile.path.replaceAll('.jpg', '_resized.jpg'));
+  //   await resizedFile.writeAsBytes(img.encodeJpg(resizedImage));
 
-    return resizedFile;
-  }
+  //   return resizedFile;
+  // }
 
   // Function to upload picture from the local file
   pickImageGallery() async {
@@ -69,10 +69,10 @@ class _MPFScreenState extends State<MPFScreen> {
     var imageMap = File(image.path);
 
     // Resize the image to 224x224 pixels
-    File resizedImageFile = await resizeImage(imageMap, 224, 224);
+    // File resizedImageFile = await resizeImage(imageMap, 224, 224);
 
     setState(() {
-      filePath = resizedImageFile;
+      filePath = imageMap;
     });
 
     // Run prediction using the Model
@@ -134,10 +134,10 @@ class _MPFScreenState extends State<MPFScreen> {
     var imageMap = File(image.path);
 
     // Resize the image to 224x224 pixels
-    File resizedImageFile = await resizeImage(imageMap, 224, 224);
+    // File resizedImageFile = await resizeImage(imageMap, 224, 224);
 
     setState(() {
-      filePath = resizedImageFile;
+      filePath = imageMap;
     });
 
     // Run prediction using the Model
