@@ -79,7 +79,7 @@ class _MPFScreenState extends State<MPFScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.7,
+      threshold: 0.8,
       asynch: true,
     );
 
@@ -144,7 +144,7 @@ class _MPFScreenState extends State<MPFScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.5,
+      threshold: 0.8,
       asynch: true,
     );
 
