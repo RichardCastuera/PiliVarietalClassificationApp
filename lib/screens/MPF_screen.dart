@@ -28,7 +28,7 @@ class _MPFScreenState extends State<MPFScreen> {
   // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/EfficientNetB0.tflite",
+        model: "assets/models/MPF-EfficientNetB0.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -79,7 +79,7 @@ class _MPFScreenState extends State<MPFScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.5,
+      threshold: 0.7,
       asynch: true,
     );
 
@@ -89,16 +89,18 @@ class _MPFScreenState extends State<MPFScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
-    } else if (recognitions != null &&
-        recognitions.length >= 6 &&
-        recognitions[5]['label'] != null &&
-        recognitions.isEmpty &&
-        recognitions[5]['label'] == 'ood') {
-      setState(() {
-        label = "No Pili Detected";
-        confidence = recognitions[0]['confidence'] = 0.0;
-      });
-    } else {
+    }
+    // else if (recognitions != null &&
+    //     recognitions.length >= 6 &&
+    //     recognitions[5]['label'] != null &&
+    //     recognitions.isEmpty &&
+    //     recognitions[5]['label'] == 'ood') {
+    //   setState(() {
+    //     label = "No Pili Detected";
+    //     confidence = recognitions[0]['confidence'] = 0.0;
+    //   });
+    // }
+    else {
       setState(() {
         label = "No Pili Detected";
         confidence = 0;
@@ -152,15 +154,17 @@ class _MPFScreenState extends State<MPFScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
-    } else if (recognitions != null &&
-        recognitions.length >= 6 &&
-        recognitions[5]['label'] != null &&
-        recognitions[5]['label'] == 'ood') {
-      setState(() {
-        label = "No Pili Detected";
-        confidence = 0;
-      });
-    } else {
+    }
+    // else if (recognitions != null &&
+    //     recognitions.length >= 6 &&
+    //     recognitions[5]['label'] != null &&
+    //     recognitions[5]['label'] == 'ood') {
+    //   setState(() {
+    //     label = "No Pili Detected";
+    //     confidence = 0;
+    //   });
+    // }
+    else {
       setState(() {
         label = "No Pili Detected";
         confidence = 0;
