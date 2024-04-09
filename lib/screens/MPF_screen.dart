@@ -41,34 +41,20 @@ class _MPFScreenState extends State<MPFScreen> {
   }
 
   // Function to resized image
-  // String resizedImage(File file) {
-  //   var rawBytes = file.readAsBytesSync();
-  //   var image = imglib.decodeImage(rawBytes);
-
-  //   // Resize image to 224x224 pixels
-  //   var resizedImage = imglib.copyResize(image!, width: 224, height: 224);
-
-  //   // Save resized image to a temporary file
-  //   var tempDir = Directory.systemTemp;
-  //   var tempFile = File('${tempDir.path}/resized_image.jpg');
-  //   tempFile.writeAsBytesSync(imglib.encodeJpg(resizedImage));
-
-  //   // Return the path to the saved resized image
-  //   return tempFile.path;
-  // }
-  Float32List resizedImage(File file) {
+  String resizedImage(File file) {
     var rawBytes = file.readAsBytesSync();
     var image = imglib.decodeImage(rawBytes);
 
     // Resize image to 224x224 pixels
     var resizedImage = imglib.copyResize(image!, width: 224, height: 224);
 
-    // Convert resized image to Float32List with pixel normalization
-    var imageBytes = resizedImage.getBytes();
-    var floatList =
-        Float32List.fromList(imageBytes.map((pixel) => pixel / 255.0).toList());
+    // Save resized image to a temporary file
+    var tempDir = Directory.systemTemp;
+    var tempFile = File('${tempDir.path}/resized_image.jpg');
+    tempFile.writeAsBytesSync(imglib.encodeJpg(resizedImage));
 
-    return floatList;
+    // Return the path to the saved resized image
+    return tempFile.path;
   }
 
   // Function to upload picture from the local file
@@ -88,16 +74,10 @@ class _MPFScreenState extends State<MPFScreen> {
     });
 
     // Run prediction using the Model
-    // var recognitions = await Tflite.runModelOnImage(
-    //   path: resImage,
-    //   numResults: 5,
-    //   threshold: 0.9,
-    //   asynch: true,
-    // );
-    var recognitions = await Tflite.runModelOnBinary(
-      binary: resImage.buffer.asUint8List(),
+    var recognitions = await Tflite.runModelOnImage(
+      path: resImage,
       numResults: 5,
-      threshold: 0.5,
+      threshold: 0.9,
       asynch: true,
     );
 
@@ -158,16 +138,10 @@ class _MPFScreenState extends State<MPFScreen> {
     });
 
     // Run prediction using the Model
-    // var recognitions = await Tflite.runModelOnImage(
-    //   path: resImage,
-    //   numResults: 5,
-    //   threshold: 0.9,
-    //   asynch: true,
-    // );
-    var recognitions = await Tflite.runModelOnBinary(
-      binary: resImage.buffer.asUint8List(),
+    var recognitions = await Tflite.runModelOnImage(
+      path: resImage,
       numResults: 5,
-      threshold: 0.5,
+      threshold: 0.9,
       asynch: true,
     );
 
