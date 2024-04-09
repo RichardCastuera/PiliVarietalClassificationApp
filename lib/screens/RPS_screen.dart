@@ -76,7 +76,7 @@ class _RPSScreenState extends State<RPSScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: resImage,
       numResults: 5,
-      threshold: 0.9,
+      threshold: 0.5,
       asynch: true,
     );
 
@@ -140,7 +140,7 @@ class _RPSScreenState extends State<RPSScreen> {
     var recognitions = await Tflite.runModelOnImage(
       path: resImage,
       numResults: 5,
-      threshold: 0.9,
+      threshold: 0.5,
       asynch: true,
     );
 
