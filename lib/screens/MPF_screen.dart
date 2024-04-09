@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,7 +11,7 @@ import 'package:pili_variety_classification/widgets/app_icon_button.dart';
 import 'package:pili_variety_classification/widgets/circle_avatar.dart';
 import 'dart:io';
 import 'dart:developer' as devtools;
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as imglib;
 
 class MPFScreen extends StatefulWidget {
   static const String id = "mpf_screen";
@@ -38,25 +40,22 @@ class _MPFScreenState extends State<MPFScreen> {
         );
   }
 
-  // Function to resize the image to 224x224 pixels
-  // Future<File> resizeImage(
-  //     File imageFile, int targetWidth, int targetHeight) async {
-  //   // Read the image as bytes
-  //   List<int> imageBytes = await imageFile.readAsBytes();
+  // Function to resized image
+  String resizedImage(File file) {
+    var rawBytes = file.readAsBytesSync();
+    var image = imglib.decodeImage(rawBytes);
 
-  //   // Decode the image
-  //   img.Image? image = img.decodeImage(imageBytes);
+    // Resize image to 224x224 pixels
+    var resizedImage = imglib.copyResize(image!, width: 224, height: 224);
 
-  //   // Resize the image
-  //   img.Image resizedImage =
-  //       img.copyResize(image!, width: targetWidth, height: targetHeight);
+    // Save resized image to a temporary file
+    var tempDir = Directory.systemTemp;
+    var tempFile = File('${tempDir.path}/resized_image.jpg');
+    tempFile.writeAsBytesSync(imglib.encodeJpg(resizedImage));
 
-  //   // Save the resized image to a new file
-  //   File resizedFile = File(imageFile.path.replaceAll('.jpg', '_resized.jpg'));
-  //   await resizedFile.writeAsBytes(img.encodeJpg(resizedImage));
-
-  //   return resizedFile;
-  // }
+    // Return the path to the saved resized image
+    return tempFile.path;
+  }
 
   // Function to upload picture from the local file
   pickImageGallery() async {
@@ -67,9 +66,8 @@ class _MPFScreenState extends State<MPFScreen> {
     if (image == null) return;
 
     var imageMap = File(image.path);
-
-    // Resize the image to 224x224 pixels
-    // File resizedImageFile = await resizeImage(imageMap, 224, 224);
+    // Call the resizeImage funtion to resize the image input
+    var resImage = resizedImage(imageMap);
 
     setState(() {
       filePath = imageMap;
@@ -77,9 +75,9 @@ class _MPFScreenState extends State<MPFScreen> {
 
     // Run prediction using the Model
     var recognitions = await Tflite.runModelOnImage(
-      path: image.path,
+      path: resImage,
       numResults: 5,
-      threshold: 0.8,
+      threshold: 0.9,
       asynch: true,
     );
 
@@ -132,9 +130,8 @@ class _MPFScreenState extends State<MPFScreen> {
     if (image == null) return;
 
     var imageMap = File(image.path);
-
-    // Resize the image to 224x224 pixels
-    // File resizedImageFile = await resizeImage(imageMap, 224, 224);
+    // Call the resizeImage funtion to resize the image input
+    var resImage = resizedImage(imageMap);
 
     setState(() {
       filePath = imageMap;
@@ -142,9 +139,9 @@ class _MPFScreenState extends State<MPFScreen> {
 
     // Run prediction using the Model
     var recognitions = await Tflite.runModelOnImage(
-      path: image.path,
+      path: resImage,
       numResults: 5,
-      threshold: 0.8,
+      threshold: 0.9,
       asynch: true,
     );
 

@@ -9,7 +9,7 @@ import 'package:pili_variety_classification/widgets/app_banner.dart';
 import 'package:pili_variety_classification/widgets/app_icon_button.dart';
 import 'package:pili_variety_classification/widgets/circle_avatar.dart';
 import 'dart:developer' as devtools;
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as imglib;
 
 class RPSScreen extends StatefulWidget {
   static const String id = "rps_screen";
@@ -28,7 +28,7 @@ class _RPSScreenState extends State<RPSScreen> {
   // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/EfficientNetB1.tflite",
+        model: "assets/models/RPS-EfficientNetB1.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -38,24 +38,21 @@ class _RPSScreenState extends State<RPSScreen> {
         );
   }
 
-  // Function to resize the image to 224x224 pixels
-  Future<File> resizeImage(
-      File imageFile, int targetWidth, int targetHeight) async {
-    // Read the image as bytes
-    List<int> imageBytes = await imageFile.readAsBytes();
+  // Function to resized image
+  String resizedImage(File file) {
+    var rawBytes = file.readAsBytesSync();
+    var image = imglib.decodeImage(rawBytes);
 
-    // Decode the image
-    img.Image? image = img.decodeImage(imageBytes);
+    // Resize image to 224x224 pixels
+    var resizedImage = imglib.copyResize(image!, width: 224, height: 224);
 
-    // Resize the image
-    img.Image resizedImage =
-        img.copyResize(image!, width: targetWidth, height: targetHeight);
+    // Save resized image to a temporary file
+    var tempDir = Directory.systemTemp;
+    var tempFile = File('${tempDir.path}/resized_image.jpg');
+    tempFile.writeAsBytesSync(imglib.encodeJpg(resizedImage));
 
-    // Save the resized image to a new file
-    File resizedFile = File(imageFile.path.replaceAll('.jpg', '_resized.jpg'));
-    await resizedFile.writeAsBytes(img.encodeJpg(resizedImage));
-
-    return resizedFile;
+    // Return the path to the saved resized image
+    return tempFile.path;
   }
 
   // Function to upload picture from the local file
@@ -68,18 +65,18 @@ class _RPSScreenState extends State<RPSScreen> {
 
     var imageMap = File(image.path);
 
-    // Resize the image to 224x224 pixels
-    File resizedImageFile = await resizeImage(imageMap, 224, 224);
+    // Call the resizeImage funtion to resize the image input
+    var resImage = resizedImage(imageMap);
 
     setState(() {
-      filePath = resizedImageFile;
+      filePath = imageMap;
     });
 
     // Run prediction using the Model
     var recognitions = await Tflite.runModelOnImage(
-      path: image.path,
+      path: resImage,
       numResults: 5,
-      threshold: 0.5,
+      threshold: 0.9,
       asynch: true,
     );
 
@@ -89,15 +86,17 @@ class _RPSScreenState extends State<RPSScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
-    } else if (recognitions != null &&
-        recognitions.length >= 6 &&
-        recognitions[5]['label'] != null &&
-        recognitions[5]['label'] == 'ood') {
-      setState(() {
-        label = "No Pili Detected";
-        confidence = 0;
-      });
-    } else {
+    }
+    // else if (recognitions != null &&
+    //     recognitions.length >= 6 &&
+    //     recognitions[5]['label'] != null &&
+    //     recognitions[5]['label'] == 'ood') {
+    //   setState(() {
+    //     label = "No Pili Detected";
+    //     confidence = 0;
+    //   });
+    // }
+    else {
       setState(() {
         label = "No Pili Detected";
         confidence = 0;
@@ -130,18 +129,18 @@ class _RPSScreenState extends State<RPSScreen> {
 
     var imageMap = File(image.path);
 
-    // Resize the image to 224x224 pixels
-    File resizedImageFile = await resizeImage(imageMap, 224, 224);
+    // Call the resizeImage funtion to resize the image input
+    var resImage = resizedImage(imageMap);
 
     setState(() {
-      filePath = resizedImageFile;
+      filePath = imageMap;
     });
 
     // Run prediction using the Model
     var recognitions = await Tflite.runModelOnImage(
-      path: image.path,
+      path: resImage,
       numResults: 5,
-      threshold: 0.5,
+      threshold: 0.9,
       asynch: true,
     );
 
@@ -151,15 +150,17 @@ class _RPSScreenState extends State<RPSScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
-    } else if (recognitions != null &&
-        recognitions.length >= 6 &&
-        recognitions[5]['label'] != null &&
-        recognitions[5]['label'] == 'ood') {
-      setState(() {
-        label = "No Pili Detected";
-        confidence = 0;
-      });
-    } else {
+    }
+    // else if (recognitions != null &&
+    //     recognitions.length >= 6 &&
+    //     recognitions[5]['label'] != null &&
+    //     recognitions[5]['label'] == 'ood') {
+    //   setState(() {
+    //     label = "No Pili Detected";
+    //     confidence = 0;
+    //   });
+    // }
+    else {
       setState(() {
         label = "No Pili Detected";
         confidence = 0;
