@@ -78,6 +78,8 @@ class _RPSScreenState extends State<RPSScreen> {
       numResults: 5,
       threshold: 0.5,
       asynch: true,
+      imageMean: 117.0,
+      imageStd: 1.0,
     );
 
     if (recognitions != null && recognitions.isNotEmpty) {
@@ -142,6 +144,8 @@ class _RPSScreenState extends State<RPSScreen> {
       numResults: 5,
       threshold: 0.5,
       asynch: true,
+      imageMean: 117.0,
+      imageStd: 1.0,
     );
 
     if (recognitions != null && recognitions.isNotEmpty) {

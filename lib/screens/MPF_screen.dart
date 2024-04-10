@@ -79,6 +79,8 @@ class _MPFScreenState extends State<MPFScreen> {
       numResults: 5,
       threshold: 0.5,
       asynch: true,
+      imageMean: 117.0,
+      imageStd: 1.0,
     );
 
     if (recognitions != null && recognitions.isNotEmpty) {
@@ -143,6 +145,8 @@ class _MPFScreenState extends State<MPFScreen> {
       numResults: 5,
       threshold: 0.5,
       asynch: true,
+      imageMean: 117.0,
+      imageStd: 1.0,
     );
 
     if (recognitions != null && recognitions.isNotEmpty) {
