@@ -138,7 +138,7 @@ class _RPSScreenState extends State<RPSScreen> {
       filePath = imageMap;
     });
 
-    // Run prediction using the Model
+    // Run Inference using the Model
     var recognitions = await Tflite.runModelOnImage(
       path: resImage,
       numResults: 5,
@@ -154,17 +154,7 @@ class _RPSScreenState extends State<RPSScreen> {
         label = recognitions[0]['label'].toString();
       });
       devtools.log(recognitions.toString());
-    }
-    // else if (recognitions != null &&
-    //     recognitions.length >= 6 &&
-    //     recognitions[5]['label'] != null &&
-    //     recognitions[5]['label'] == 'ood') {
-    //   setState(() {
-    //     label = "No Pili Detected";
-    //     confidence = 0;
-    //   });
-    // }
-    else {
+    } else {
       setState(() {
         label = "No Pili Detected";
         confidence = 0;

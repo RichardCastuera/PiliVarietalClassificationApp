@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pili_variety_classification/screens/preview_image.dart';
@@ -27,10 +28,16 @@ class _MPFScreenState extends State<MPFScreen> {
   double confidence = 0.0;
   String input = 'MPF';
 
+  @override
+  void initState() {
+    super.initState();
+    _tfLteInit();
+  }
+
   // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/MPF-EfficientNetB0.tflite",
+        model: "assets/models/EfficientNetB0_last.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -192,12 +199,6 @@ class _MPFScreenState extends State<MPFScreen> {
   void dispose() {
     super.dispose();
     Tflite.close();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _tfLteInit();
   }
 
   @override
