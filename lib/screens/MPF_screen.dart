@@ -37,7 +37,7 @@ class _MPFScreenState extends State<MPFScreen> {
   // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/EfficientNetB0_last.tflite",
+        model: "assets/models/MPF-EfficientNetB0.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
