@@ -28,7 +28,7 @@ class _RPSScreenState extends State<RPSScreen> {
   // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/EfficientNetB1_new.tflite",
+        model: "assets/models/EfficientNetB1_newv2.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -44,7 +44,7 @@ class _RPSScreenState extends State<RPSScreen> {
     var image = imglib.decodeImage(rawBytes);
 
     // Resize image to 224x224 pixels
-    var resizedImage = imglib.copyResize(image!, width: 224, height: 224);
+    var resizedImage = imglib.copyResize(image!, width: 240, height: 240);
 
     // Save resized image to a temporary file
     var tempDir = Directory.systemTemp;
