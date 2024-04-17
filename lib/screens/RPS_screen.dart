@@ -28,7 +28,7 @@ class _RPSScreenState extends State<RPSScreen> {
   // Load the model
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "assets/models/RPS-EfficientNetB1.tflite",
+        model: "assets/models/EfficientNetB1_new.tflite",
         labels: "assets/label/label.txt",
         numThreads: 1, // defaults to 1
         isAsset:
